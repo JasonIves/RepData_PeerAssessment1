@@ -2,7 +2,7 @@
 
 
 ## Loading and preprocessing the data
-This data is forked from [the github repository](https://github.com/rdpeng/RepData_PeerAssessment1) for the Coursera Reproducible Research course.  This repository includes the data itself.  This processing file assumes you have downloaded the <i>activity.zi</i>p data file, and it resides in your working directory.
+This data is forked from [the github repository](https://github.com/rdpeng/RepData_PeerAssessment1) for the Coursera Reproducible Research course.  This repository includes the data itself.  This processing file assumes you have downloaded the <i>activity.zip</i> data file, and it resides in your working directory.
 
 To load and pre-process the data the following steps are taken:
 * <i>activity.zip</i> is unzipped if necessary (if the data file is not in the working directory).
@@ -54,19 +54,19 @@ The average daily activity pattern is examined by determining the number of step
 ```{r dailyactv, echo = TRUE}
 intrvlSteps <- tapply(clnActivity$steps, clnActivity$interval, mean)
 
-plot(rownames(intrvlSteps), intrvlSteps, type = "l", col = "darkolivegreen3", main = "Average dailyl activity pattern", xlab = "Interval", ylab = "Number of Steps")
+plot(rownames(intrvlSteps), intrvlSteps, type = "l", col = "darkolivegreen3", main = "Average daily activity pattern", xlab = "Interval", ylab = "Number of Steps")
 ```
 
 ### 5-minute interval that, on average across all days in the dataset, contains the maximum number of steps
 ```{r maxactv, echo = TRUE}
 maxInt <- names(intrvlSteps[intrvlSteps == max(intrvlSteps)])
 ```
-The interval that, on average across all days in the dataset, contains the maximum number of steps is <b>interval `r maxInt`</b>.
+The interval that, on average across all days in the data set, contains the maximum number of steps is <b>interval `r maxInt`</b>.
 
 
 ## Imputing missing values
 Missing values for the number of steps are imputed by inserting the average steps across all days for that particular interval.  The steps to execute this process are:
-* Calculate the number of missing values in the dataset
+* Calculate the number of missing values in the data set
 * A new data frame called <i>intrvlMeans</i> based on the <i>intrvlSteps</i> array is created.
 * <i>intrvlMeans</i> is merged with the <i>activity</i> data set in the <i>interval</i> variable, to create a new column called <i>avgMeans</i> and a new data set that includes the <i>avgMeans</i> called <i>impActivity</i>
 * <i>impActivity</i> is ordered by date and interval
@@ -81,7 +81,7 @@ Missing values for the number of steps are imputed by inserting the average step
 ```{r missings, echo = TRUE}
 misVal <- table(complete.cases(activity), exclude = "TRUE")
 ```
-The total number of missing values in the dataset is <b>`r misVal`</b>.
+The total number of missing values in the data set is <b>`r misVal`</b>.
 
 ```{r impute, echo = TRUE}
 intrvlMeans <- data.frame(interval = names(intrvlSteps), avgSteps = as.numeric(intrvlSteps))
@@ -98,7 +98,7 @@ impActivity <- data.frame(impActivity$steps, impActivity$date, impActivity$inter
 
 colnames(impActivity) <- c("steps", "date", "interval")
 ```
-The new dataset containing imputed values is <i><b>impActivity</b></i>.
+The new data set containing imputed values is <i><b>impActivity</b></i>.
 
 ```{r impstepssum, echo = TRUE}
 impDailySteps <- tapply(impActivity$steps, impActivity$date, sum)
